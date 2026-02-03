@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Button
+import androidx.compose.foundation.layout.height
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -63,21 +65,37 @@ class InboxScreen : Screen {
                     }
                     is InboxState.Success -> {
                         val messages = (state as InboxState.Success).messages
-                        LazyColumn {
-                            items(messages) { message ->
-                                MessageItem(message) {
-                                    navigator.push(MessageDetailScreen(message.id))
+                        if (messages.isEmpty()) {
+                            Text(
+                                text = "No emails found",
+                                style = MaterialTheme.typography.bodyLarge,
+                                modifier = Modifier.align(Alignment.Center)
+                            )
+                        } else {
+                            LazyColumn {
+                                items(messages) { message ->
+                                    MessageItem(message) {
+                                        navigator.push(MessageDetailScreen(message.id))
+                                    }
+                                    Divider()
                                 }
-                                Divider()
                             }
                         }
                     }
                     is InboxState.Error -> {
-                        Text(
-                            text = (state as InboxState.Error).message,
-                            color = MaterialTheme.colorScheme.error,
-                            modifier = Modifier.align(Alignment.Center)
-                        )
+                        Column(
+                            modifier = Modifier.align(Alignment.Center),
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Text(
+                                text = (state as InboxState.Error).message,
+                                color = MaterialTheme.colorScheme.error
+                            )
+                            Spacer(modifier = Modifier.height(16.dp))
+                            Button(onClick = { screenModel.loadMessages() }) {
+                                Text("Retry")
+                            }
+                        }
                     }
                 }
             }

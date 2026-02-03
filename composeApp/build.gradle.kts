@@ -78,6 +78,9 @@ kotlin {
 
             // Serialization
             implementation(libs.kotlinx.serialization.json)
+
+            // Settings
+            implementation(libs.multiplatform.settings)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

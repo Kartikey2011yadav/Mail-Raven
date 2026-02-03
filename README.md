@@ -1,76 +1,54 @@
-This is a Kotlin Multiplatform project targeting Android, iOS, Web, Desktop (JVM).
+# MailRaven Mobile App
 
-* [/composeApp](./composeApp/src) is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - [commonMain](./composeApp/src/commonMain/kotlin) is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    the [iosMain](./composeApp/src/iosMain/kotlin) folder would be the right place for such calls.
-    Similarly, if you want to edit the Desktop (JVM) specific part, the [jvmMain](./composeApp/src/jvmMain/kotlin)
-    folder is the appropriate location.
+A Kotlin Multiplatform (KMP) mobile email client for the MailRaven server. Built with Compose Multiplatform, Ktor, and Voyager.
 
-* [/iosApp](./iosApp/iosApp) contains iOS applications. Even if you’re sharing your UI with Compose Multiplatform,
-  you need this entry point for your iOS app. This is also where you should add SwiftUI code for your project.
+## Features
 
-### Build and Run Android Application
+- **Authentication**: Login with email/password. Persistent session.
+- **Inbox**: View list of received emails.
+- **Read**: View full email content.
+- **Compose**: Send new emails to other users.
 
-To build and run the development version of the Android app, use the run configuration from the run widget
-in your IDE’s toolbar or build it directly from the terminal:
-- on macOS/Linux
-  ```shell
-  ./gradlew :composeApp:assembleDebug
-  ```
-- on Windows
-  ```shell
-  .\gradlew.bat :composeApp:assembleDebug
-  ```
+## Tech Stack
 
-### Build and Run Desktop (JVM) Application
+- **Kotlin Multiplatform**: Shared logic for Android (and iOS/Desktop in future).
+- **Compose Multiplatform**: Shared UI across platforms.
+- **Ktor Client**: Networking and API interaction.
+- **Voyager**: Navigation.
+- **Koin**: Dependency Injection.
+- **Multiplatform Settings**: Key-Value storage (Token persistence).
+- **Kotlinx Serialization**: JSON parsing.
 
-To build and run the development version of the desktop app, use the run configuration from the run widget
-in your IDE’s toolbar or run it directly from the terminal:
-- on macOS/Linux
-  ```shell
-  ./gradlew :composeApp:run
-  ```
-- on Windows
-  ```shell
-  .\gradlew.bat :composeApp:run
-  ```
+## Setup & Running
 
-### Build and Run Web Application
+### Prerequisites
 
-To build and run the development version of the web app, use the run configuration from the run widget
-in your IDE's toolbar or run it directly from the terminal:
-- for the Wasm target (faster, modern browsers):
-  - on macOS/Linux
-    ```shell
-    ./gradlew :composeApp:wasmJsBrowserDevelopmentRun
-    ```
-  - on Windows
-    ```shell
-    .\gradlew.bat :composeApp:wasmJsBrowserDevelopmentRun
-    ```
-- for the JS target (slower, supports older browsers):
-  - on macOS/Linux
-    ```shell
-    ./gradlew :composeApp:jsBrowserDevelopmentRun
-    ```
-  - on Windows
-    ```shell
-    .\gradlew.bat :composeApp:jsBrowserDevelopmentRun
-    ```
+- **MailRaven Server**: Ensure the Go server is running locally on port `8080`.
+  - Android assumes `http://10.0.2.2:8080` (Emulator localhost).
+  - iOS/Desktop assumes `http://localhost:8080`.
 
-### Build and Run iOS Application
+### Android
 
-To build and run the development version of the iOS app, use the run configuration from the run widget
-in your IDE’s toolbar or open the [/iosApp](./iosApp) directory in Xcode and run it from there.
+Build and run the app on an Android Emulator or Device:
 
----
+```bash
+./gradlew :composeApp:installDebug
+```
 
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html),
-[Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform/#compose-multiplatform),
-[Kotlin/Wasm](https://kotl.in/wasm/)…
+### Testing
 
-We would appreciate your feedback on Compose/Web and Kotlin/Wasm in the public Slack channel [#compose-web](https://slack-chats.kotlinlang.org/c/compose-web).
-If you face any issues, please report them on [YouTrack](https://youtrack.jetbrains.com/newIssue?project=CMP).
+Run Unit Tests (Auth, Message Repositories, ViewModels):
+
+```bash
+./gradlew :composeApp:testDebugUnitTest
+```
+
+## Project Structure
+
+- `composeApp/src/commonMain`: Shared Code (UI, ViewModels, Repositories, Models).
+- `composeApp/src/androidMain`: Android-specific implementations.
+- `composeApp/src/iosMain`: iOS-specific implementations.
+
+## CI/CD
+
+GitHub Actions workflow is configured in `.github/workflows/android.yml` to run tests and build on push.

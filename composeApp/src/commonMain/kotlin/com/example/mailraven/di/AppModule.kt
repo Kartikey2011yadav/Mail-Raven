@@ -20,7 +20,11 @@ import com.example.mailraven.screens.inbox.InboxScreenModel
 import com.example.mailraven.screens.detail.MessageDetailScreenModel
 import com.example.mailraven.screens.compose.ComposeScreenModel
 
+import com.russhwolf.settings.Settings
+
 val appModule = module {
+    single { Settings() }
+    
     single {
         HttpClient {
             install(ContentNegotiation) {
@@ -41,7 +45,7 @@ val appModule = module {
         }
     }
     
-    single { AuthRepository(get()) }
+    single { AuthRepository(get(), get()) }
     single { MessageRepository(get(), get()) }
     
     factory { LoginScreenModel(get()) }

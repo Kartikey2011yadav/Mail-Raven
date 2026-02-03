@@ -22,6 +22,7 @@ koin-compose = "1.2.0-Beta4"
 kotlinx-serialization = "1.8.0"
 ktor-client-mock = "3.0.3"
 mockk = "1.13.14"
+multiplatformSettings = "1.2.0"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -70,6 +71,7 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 # Testing
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+multiplatform-settings = { module = "com.russhwolf:multiplatform-settings", version.ref = "multiplatformSettings" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
