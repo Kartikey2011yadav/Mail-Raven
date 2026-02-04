@@ -81,6 +81,7 @@ kotlin {
 
             // Settings
             implementation(libs.multiplatform.settings)
+            implementation(libs.multiplatform.settings.no.arg)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

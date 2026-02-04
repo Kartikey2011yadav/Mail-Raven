@@ -20,18 +20,13 @@ import mailraven.composeapp.generated.resources.Res
 import mailraven.composeapp.generated.resources.compose_multiplatform
 import org.koin.compose.KoinContext
 
-import org.koin.compose.KoinApplication
-import com.example.mailraven.di.appModule
-
 import cafe.adriel.voyager.navigator.Navigator
 import com.example.mailraven.screens.login.LoginScreen
 
 @Composable
 @Preview
 fun App() {
-    KoinApplication(application = {
-        modules(appModule)
-    }) {
+    KoinContext {
         MaterialTheme {
             Navigator(LoginScreen())
         }

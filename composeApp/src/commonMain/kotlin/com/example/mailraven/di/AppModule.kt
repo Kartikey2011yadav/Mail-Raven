@@ -19,12 +19,12 @@ import com.example.mailraven.screens.login.LoginScreenModel
 import com.example.mailraven.screens.inbox.InboxScreenModel
 import com.example.mailraven.screens.detail.MessageDetailScreenModel
 import com.example.mailraven.screens.compose.ComposeScreenModel
-
 import com.russhwolf.settings.Settings
+
 
 val appModule = module {
     single { Settings() }
-    
+
     single {
         HttpClient {
             install(ContentNegotiation) {
