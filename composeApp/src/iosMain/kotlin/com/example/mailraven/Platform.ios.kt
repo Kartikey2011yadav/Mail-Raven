@@ -8,4 +8,4 @@ class IOSPlatform: Platform {
 
 actual fun getPlatform(): Platform = IOSPlatform()
 
-actual fun getBaseUrl(): String = "http://localhost:8080/api/v1"
+actual fun getBaseUrl(): String = "http://localhost:8080/api/v1/"
