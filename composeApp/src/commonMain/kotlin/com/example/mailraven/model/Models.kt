@@ -53,3 +53,12 @@ data class SendMessageResponse(
     val status: String,
     val id: String
 )
+
+@Serializable
+data class MessagesResponse(
+    val messages: List<MessageSummary>,
+    val total: Int,
+    val limit: Int,
+    val offset: Int,
+    val has_more: Boolean
+)

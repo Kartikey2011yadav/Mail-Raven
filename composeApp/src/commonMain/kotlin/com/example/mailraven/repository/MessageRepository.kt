@@ -4,6 +4,7 @@ import com.example.mailraven.model.MessageDetail
 import com.example.mailraven.model.MessageSummary
 import com.example.mailraven.model.SendMessageRequest
 import com.example.mailraven.model.SendMessageResponse
+import com.example.mailraven.model.MessagesResponse
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.bearerAuth
@@ -22,12 +23,12 @@ class MessageRepository(
 
     suspend fun getMessages(limit: Int = 50, offset: Int = 0): Result<List<MessageSummary>> {
         return try {
-            val messages = client.get("messages") {
+            val response = client.get("messages") {
                 bearerAuth(getToken())
                 parameter("limit", limit)
                 parameter("offset", offset)
-            }.body<List<MessageSummary>>()
-            Result.success(messages)
+            }.body<MessagesResponse>()
+            Result.success(response.messages)
         } catch (e: Exception) {
             Result.failure(e)
         }
