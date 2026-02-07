@@ -23,13 +23,19 @@ import org.koin.compose.KoinContext
 
 import cafe.adriel.voyager.navigator.Navigator
 import com.example.mailraven.screens.login.LoginScreen
+import com.example.mailraven.screens.inbox.InboxScreen
+import com.example.mailraven.repository.AuthRepository
+import org.koin.compose.koinInject
 
 @Composable
 @Preview
 fun App() {
     KoinContext {
+        val authRepository = koinInject<AuthRepository>()
+        val isLoggedIn = authRepository.isLoggedIn()
+        
         MailRavenTheme {
-            Navigator(LoginScreen())
+            Navigator(if (isLoggedIn) InboxScreen() else LoginScreen())
         }
     }
 }
