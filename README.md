@@ -1,54 +1,106 @@
-# MailRaven Mobile App
+# MailRaven — Mobile Email Client
 
-A Kotlin Multiplatform (KMP) mobile email client for the MailRaven server. Built with Compose Multiplatform, Ktor, and Voyager.
+> A Kotlin Multiplatform email client for the MailRaven server, built with Compose Multiplatform.
+
+---
+
+## What Is This?
+
+MailRaven is a cross-platform mobile email client that connects to the [MailRaven backend server](docs/api/API.md). It shares all business logic and UI across platforms through Kotlin Multiplatform, meaning one codebase targets Android today — with iOS ready to follow.
+
+---
 
 ## Features
 
-- **Authentication**: Login with email/password. Persistent session.
-- **Inbox**: View list of received emails.
-- **Read**: View full email content.
-- **Compose**: Send new emails to other users.
+| Feature | Description |
+|---|---|
+| **Login** | Email/password authentication with persistent session |
+| **Inbox** | View and browse received emails |
+| **Read** | Open and read full email content |
+| **Compose** | Write and send emails to other users |
+| **Profile** | View your account profile |
+| **Settings** | App preferences and configuration |
+| **Theming** | Light (Cloud) and Dark (Midnight) theme support |
+
+---
 
 ## Tech Stack
 
-- **Kotlin Multiplatform**: Shared logic for Android (and iOS/Desktop in future).
-- **Compose Multiplatform**: Shared UI across platforms.
-- **Ktor Client**: Networking and API interaction.
-- **Voyager**: Navigation.
-- **Koin**: Dependency Injection.
-- **Multiplatform Settings**: Key-Value storage (Token persistence).
-- **Kotlinx Serialization**: JSON parsing.
+| Layer | Library |
+|---|---|
+| **UI** | [Compose Multiplatform](https://www.jetbrains.com/compose-multiplatform/) |
+| **Navigation** | [Voyager](https://voyager.adriel.cafe/) |
+| **Networking** | [Ktor Client](https://ktor.io/docs/client-create-new-application.html) |
+| **Dependency Injection** | [Koin](https://insert-koin.io/) |
+| **Serialization** | [Kotlinx Serialization](https://github.com/Kotlin/kotlinx.serialization) |
+| **Session Storage** | [Multiplatform Settings](https://github.com/russhwolf/multiplatform-settings) |
+| **Shared Logic** | [Kotlin Multiplatform](https://kotlinlang.org/docs/multiplatform.html) |
 
-## Setup & Running
-
-### Prerequisites
-
-- **MailRaven Server**: Ensure the Go server is running locally on port `8080`.
-  - Android assumes `http://10.0.2.2:8080` (Emulator localhost).
-  - iOS/Desktop assumes `http://localhost:8080`.
-
-### Android
-
-Build and run the app on an Android Emulator or Device:
-
-```bash
-./gradlew :composeApp:installDebug
-```
-
-### Testing
-
-Run Unit Tests (Auth, Message Repositories, ViewModels):
-
-```bash
-./gradlew :composeApp:testDebugUnitTest
-```
+---
 
 ## Project Structure
 
-- `composeApp/src/commonMain`: Shared Code (UI, ViewModels, Repositories, Models).
-- `composeApp/src/androidMain`: Android-specific implementations.
-- `composeApp/src/iosMain`: iOS-specific implementations.
+```
+composeApp/
+  src/
+    commonMain/       # Shared code: UI, ViewModels, Repositories, Models
+      screens/
+        login/        # Login screen + ScreenModel
+        inbox/        # Inbox screen + ScreenModel
+        detail/       # Message detail screen
+        compose/      # Compose email screen
+        profile/      # Profile screen
+        settings/     # Settings screen
+      repository/     # AuthRepository, MessageRepository
+      model/          # Data models
+      ui/theme/       # Colors, Theme (Light/Dark)
+      di/             # Koin AppModule
+    androidMain/      # Android-specific: Platform impl, base URL
+    iosMain/          # iOS-specific: Platform impl, base URL
+iosApp/               # iOS application entry point
+```
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+1. **JDK 17+** and **Android Studio** (Hedgehog or newer)
+2. **MailRaven backend server** running locally on port `8080`
+   - Clone and run the Go server separately
+   - Android emulator connects via `http://10.0.2.2:8080`
+   - iOS/Desktop connects via `http://localhost:8080`
+
+### Run on Android
+
+```bash
+# Install on a connected device or running emulator
+./gradlew :composeApp:installDebug
+```
+
+### Run Tests
+
+```bash
+# Unit tests for Auth, Message Repositories, and ViewModels
+./gradlew :composeApp:testDebugUnitTest
+```
+
+---
 
 ## CI/CD
 
-GitHub Actions workflow is configured in `.github/workflows/android.yml` to run tests and build on push.
+GitHub Actions is configured at `.github/workflows/android.yml` and runs on every push:
+- Executes the unit test suite
+- Builds the debug APK
+
+---
+
+## Documentation
+
+Full project documentation lives in the [`docs/`](docs/README.md) folder:
+
+- [API Specification](docs/api/API.md) — REST endpoints for client developers
+- [Architecture Overview](docs/architecture/ARCHITECTURE.md) — System design and decisions
+- [Client Developer Handover](docs/development/CLIENT_DEVELOPER_HANDOVER.md) — Onboarding guide
+- [Production Guide](docs/guides/PRODUCTION.md) — Deployment, Docker, and database setup
